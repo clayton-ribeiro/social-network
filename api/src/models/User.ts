@@ -1,33 +1,62 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import mongoose, { Schema } from 'mongoose';
+import IUser from '../interfaces/IUser';
 
-@Entity('users')
-class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+const UserSchema: Schema = new Schema({
+  username: {
+    type: String,
+    require: true,
+    min: 3,
+    max: 20,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    max: 50,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    min: 6,
+  },
+  profilePicture: {
+    type: String,
+    default: "",
+  },
+  coverPicture: {
+    type: String,
+    default: "",
+  },
+  followers: {
+    type: Array,
+    default: [],
+  },
+  followings: {
+    type: Array,
+    default: [],
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  desc: {
+    type: String,
+    max: 50,
+  },
+  city: {
+    type: String,
+    max: 50,
+  },
+  from: {
+    type: String,
+    max: 50,
+  },
+  relationship: {
+    type: Number,
+    enum: [1, 2, 3],
+  },
+},
+{ timestamps: true });
 
-  @Column()
-  name: string;
-
-  @Column()
-  email: string;
-
-  @Column()
-  password: string;
-
-  @Column()
-  avatar: string;
-
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
-}
-
-export default User;
+export default mongoose.model<IUser>('User', UserSchema);
