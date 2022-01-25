@@ -23,7 +23,8 @@ authRouter.post('/register', async (request, response) => {
         
         response.status(200).json(user);
       } catch (err) {
-        response.status(500).json(err)
+        console.log(err);
+        response.status(500).json(err);
       }
 });
 

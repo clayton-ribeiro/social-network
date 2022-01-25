@@ -7,17 +7,22 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 
-interface IUser {
-    profilePicture: String,
-    coverPicture: String,
-    username: String,
-    desc: string
+type IUser = {
+  relationship: Number,
+  city: String,
+  from: String,
+  username: String,
+  _id: number,
+  id: number,
+  coverPicture:string,
+  profilePicture:string,
+  desc:string,
 }
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER || '';
-  const [user, setUser] = useState<IUser|null>(null);
-  const username = useParams().username;
+  const [user, setUser] = useState<IUser>();
+  const username = useParams<{username?: string}>().username;
 
   useEffect(() => {
     const fetchUser = async () => {

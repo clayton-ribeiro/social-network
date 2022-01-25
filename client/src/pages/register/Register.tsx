@@ -4,21 +4,21 @@ import "./register.css";
 import { useHistory } from "react-router";
 
 export default function Register() {
-  const username = useRef();
-  const email = useRef();
-  const password = useRef();
-  const passwordAgain = useRef();
+  const username = useRef<HTMLInputElement | null>(null);
+  const email = useRef<HTMLInputElement | null>(null);
+  const password = useRef<HTMLInputElement | null>(null);
+  const passwordAgain = useRef<HTMLInputElement | null>(null);
   const history = useHistory();
 
-  const handleClick = async (e) => {
+  const handleClick = async (e:any) => {
     e.preventDefault();
-    if (passwordAgain.current.value !== password.current.value) {
-      passwordAgain.current.setCustomValidity("Passwords don't match!");
+    if (passwordAgain.current?.value !== password.current?.value) {
+      passwordAgain.current?.setCustomValidity("Passwords don't match!");
     } else {
       const user = {
-        username: username.current.value,
-        email: email.current.value,
-        password: password.current.value,
+        username: username.current?.value,
+        email: email.current?.value,
+        password: password.current?.value,
       };
       try {
         await axios.post("/auth/register", user);
@@ -59,7 +59,6 @@ export default function Register() {
               ref={password}
               className="loginInput"
               type="password"
-              minLength="6"
             />
             <input
               placeholder="Password Again"

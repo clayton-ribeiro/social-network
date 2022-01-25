@@ -14,12 +14,11 @@ const app = express();
 
 dotenv.config();
 
-mongoose.connect(
- process.env.MONGO_URL,
-  () => {
-    console.log("Connected to MongoDB");
-  }
-);
+mongoose 
+ .connect('mongodb+srv://clay:q9AdjCMU3UMdmx52@cluster0.xoeqb.mongodb.net/social-db?retryWrites=true&w=majority')   
+ .then(() => console.log("Database connected!"))
+ .catch(err => console.log(err));
+
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middleware

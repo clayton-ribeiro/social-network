@@ -5,15 +5,15 @@ import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
 
 export default function Login() {
-  const email = useRef();
-  const password = useRef();
-  const { isFetching, dispatch } = useContext(AuthContext);
+  const email = useRef<HTMLInputElement | null>(null);
+  const password = useRef<HTMLInputElement | null>(null);
+  const context = useContext(AuthContext);
 
-  const handleClick = (e) => {
+  const handleClick = (e:any) => {
     e.preventDefault();
     loginCall(
-      { email: email.current.value, password: password.current.value },
-      dispatch
+      { email: email.current?.value, password: password.current?.value },
+      context?.dispatch
     );
   };
 
@@ -39,21 +39,20 @@ export default function Login() {
               placeholder="Password"
               type="password"
               required
-              minLength="6"
               className="loginInput"
               ref={password}
             />
-            <button className="loginButton" type="submit" disabled={isFetching}>
-              {isFetching ? (
-                <CircularProgress color="white" size="20px" />
+            <button className="loginButton" type="submit" disabled={context?.state.isFetching}>
+              {context?.state.isFetching ? (
+                <CircularProgress size="20px" />
               ) : (
                 "Log In"
               )}
             </button>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton">
-              {isFetching ? (
-                <CircularProgress color="white" size="20px" />
+              {context?.state.isFetching ? (
+                <CircularProgress size="20px" />
               ) : (
                 "Create a New Account"
               )}
